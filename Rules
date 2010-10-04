@@ -15,7 +15,7 @@ compile '/stylesheet/' do
 end
 
 compile '*' do
-  filter :erb
+  filter :haml
   layout 'default'
 end
 
