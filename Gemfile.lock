@@ -18,6 +18,7 @@ GEM
   specs:
     cri (1.0.1)
     diff-lcs (1.1.2)
+    haml (3.0.21)
     nanoc (3.1.5)
       nanoc3 (>= 3.1.5)
     nanoc3 (3.1.5)
@@ -35,6 +36,7 @@ PLATFORMS
 
 DEPENDENCIES
   bitsbuilder-blog!
+  haml
   nanoc (~> 3.1)
   rake
   rspec!
