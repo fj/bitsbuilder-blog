@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    bbb (0.0.1)
+    bitsbuilder-blog (0.0.1)
 
 GEM
   remote: http://rubygems.org/
@@ -34,7 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bbb!
+  bitsbuilder-blog!
   nanoc (~> 3.1)
   rake
   rspec!
