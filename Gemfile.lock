@@ -1,20 +1,40 @@
+GIT
+  remote: http://github.com/rspec/rspec.git
+  revision: 3df49f5
+  tag: v2.0.0.beta.22
+  specs:
+    rspec (2.0.0.beta.22)
+      rspec-core (= 2.0.0.beta.22)
+      rspec-expectations (= 2.0.0.beta.22)
+      rspec-mocks (= 2.0.0.beta.22)
+
 PATH
   remote: .
   specs:
-    bbb (0.0.1)
+    bitsbuilder-blog (0.0.1)
 
 GEM
   remote: http://rubygems.org/
   specs:
     cri (1.0.1)
+    diff-lcs (1.1.2)
     nanoc (3.1.5)
       nanoc3 (>= 3.1.5)
     nanoc3 (3.1.5)
       cri (>= 1.0.0)
+    rake (0.8.7)
+    rspec-core (2.0.0.beta.22)
+    rspec-expectations (2.0.0.beta.22)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.22)
+      rspec-core (= 2.0.0.beta.22)
+      rspec-expectations (= 2.0.0.beta.22)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  bbb!
+  bitsbuilder-blog!
   nanoc (~> 3.1)
+  rake
+  rspec!

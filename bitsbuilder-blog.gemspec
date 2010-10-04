@@ -1,10 +1,10 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
-require 'bbb/version'
+require 'bitsbuilder/blog/version'
 
 Gem::Specification.new do |s|
-  s.name        = "bbb"
+  s.name        = "bitsbuilder-blog"
   s.version     = BitsBuilder::Blog::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["John Feminella"]
