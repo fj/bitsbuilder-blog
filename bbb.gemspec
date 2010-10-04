@@ -15,15 +15,6 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = ">= 1.3.6"
 
-  # Runtime dependencies.
-  {
-    'nanoc' => ['>= 3.1']
-  }.each { |dep, reqs| s.add_runtime_dependency(dep, reqs) }
-  
-  # Development dependencies.
-  {
-  }.each { |dep, reqs| s.add_development_dependency(dep, reqs) }
-
   s.files        = Dir.glob("{bin,lib}/**/*") + Dir.glob('*.md')
   s.executables  = []
   s.require_path = 'lib'
