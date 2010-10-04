@@ -1,3 +1,5 @@
+output/
+tmp/
 .bundle/*
 *.swp
 *.swo
