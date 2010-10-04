@@ -1,3 +1,6 @@
+.sass-cache/
+output/
+tmp/
 .bundle/*
 *.swp
 *.swo

@@ -1,6 +1,7 @@
 require 'rake'
 require 'rspec/core'
 require 'rspec/core/rake_task'
+require 'nanoc3/tasks'
 
 module BitsBuilder
   module Configuration
