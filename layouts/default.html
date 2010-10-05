@@ -1,0 +1,16 @@
+!!! 5
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %title A Brand New nanoc Site
+    = @item[:title]
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/styles/screen.css", :media => "screen"}
+    %meta{:name => 'generator', :content => 'nanoc-3.1.5'}
+  %body
+    #main
+      = yield
+    #sidebar
+      %h2 Documentation
+      %ul
+        %li
+          %a{:href => 'http://nanoc.stoneship.org/docs/'} Nanoc Documentation
