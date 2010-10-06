@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'time'
 require 'compass'
 Compass.add_project_configuration('config/compass.development.rb')
 
@@ -9,6 +10,14 @@ default_haml_options = { :format => :html5 }
 preprocess do
   # Don't publish items if so indicated.
   items.delete_if { |item| item[:publish] == false }
+
+  # Add stubs to articles.
+  items.select { |item| item[:kind] == 'article' }.each do |item|
+    pieces = item.identifier.split('/')
+    pieces.pop
+    item[:stub] ||= stub_for(item[:title])
+    item.identifier = [pieces.join('/'), item[:stub], ''].join('/')
+  end
 end
 
 compile '/styles/*/' do
@@ -39,10 +48,18 @@ route '/styles/*/' do
 end
 
 route '/posts/*/' do
+  # Route to "/{posts prefix}/{date}/{stub}".
+  raise ArgumentError.new("missing `created_at` metadata on item #{item}") if item[:created_at].nil?
+
   pieces = item.identifier.split('/')
-  stub = pieces.pop
-  item[:stub] ||= stub
-  (pieces + ['']).join('/') + item[:stub] + item[:extension].split('.').first
+  name = pieces.pop
+  prefix = pieces.join('/')
+  date_prefix= '/' + Time.parse(item[:created_at]).strftime("%Y/%m/%d")
+  date_prefix.split('/').compact.each { |str| match = '/#{str}'; prefix.gsub!(/#{match}(?=\/)/, '') }
+
+  prefix += date_prefix unless prefix.include?(date_prefix)
+
+  "#{[prefix, name].join('/')}.#{item[:extension].split('.').first}"
 end
 
 route '*' do
