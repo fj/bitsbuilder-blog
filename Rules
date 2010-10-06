@@ -11,11 +11,13 @@ preprocess do
   items.delete_if { |item| item[:publish] == false }
 end
 
+compile '/styles/*/' do
+  filter :sass,
+    default_sass_options.merge(:syntax => item[:extension].to_sym)
+end
+
 compile '*' do
   case item[:extension]
-  when 'sass', 'scss'
-    filter :sass,
-      default_sass_options.merge(:syntax => item[:extension].to_sym)
   when 'haml'
     filter :haml,
       default_haml_options
