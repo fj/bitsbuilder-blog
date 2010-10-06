@@ -1,25 +1,40 @@
 #!/usr/bin/env ruby
 
-# A few helpful tips about the Rules file:
-#
-# * The order of rules is important: for each item, only the first matching
-#   rule is applied.
-#
-# * Item identifiers start and end with a slash (e.g. "/about/" for the file
-#   "content/about.html"). To select all children, grandchildren, ... of an
-#   item, use the pattern "/about/*/"; "/about/*" will also select the parent,
-#   because "*" matches zero or more characters.
-
+require 'time'
 require 'compass'
 Compass.add_project_configuration('config/compass.development.rb')
 
-sass_options = Compass.sass_engine_options
+default_sass_options = Compass.sass_engine_options
+default_haml_options = { :format => :html5 }
+
+preprocess do
+  # Don't publish items if so indicated.
+  items.delete_if { |item| item[:publish] == false }
+
+  # Add stubs to articles.
+  items.select { |item| item[:kind] == 'article' }.each do |item|
+    pieces = item.identifier.split('/')
+    pieces.pop
+    item[:stub] ||= stub_for(item[:title])
+    item.identifier = [pieces.join('/'), item[:stub], ''].join('/')
+  end
+end
+
 compile '/styles/*/' do
-  filter :sass, sass_options.merge(:syntax => item[:extension].to_sym)
+  filter :sass,
+    default_sass_options.merge(:syntax => item[:extension].to_sym)
 end
 
 compile '*' do
-  filter :haml
+  case item[:extension]
+  when 'haml'
+    filter :haml,
+      default_haml_options
+  else
+    filter :haml,
+      default_haml_options
+  end
+
   layout 'default'
 end
 
@@ -29,7 +44,22 @@ route '/styles/_*/' do
 end
 
 route '/styles/*/' do
-  item.identifier.chop + '.css'
+  "#{item.identifier.chop}.#{item[:extension].split('.').first}"
+end
+
+route '/posts/*/' do
+  # Route to "/{posts prefix}/{date}/{stub}".
+  raise ArgumentError.new("missing `created_at` metadata on item #{item}") if item[:created_at].nil?
+
+  pieces = item.identifier.split('/')
+  name = pieces.pop
+  prefix = pieces.join('/')
+  date_prefix= '/' + Time.parse(item[:created_at]).strftime("%Y/%m/%d")
+  date_prefix.split('/').compact.each { |str| match = '/#{str}'; prefix.gsub!(/#{match}(?=\/)/, '') }
+
+  prefix += date_prefix unless prefix.include?(date_prefix)
+
+  "#{[prefix, name].join('/')}.#{item[:extension].split('.').first}"
 end
 
 route '*' do
