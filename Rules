@@ -26,13 +26,17 @@ compile '/styles/*/' do
 end
 
 compile '*' do
-  case item[:extension]
+  case item[:extension].split('.').last
   when 'haml'
     filter :haml,
       default_haml_options
   else
-    filter :haml,
-      default_haml_options
+    warn "[!!] unsupported extension #{item[:extension]} for #{item.identifier}; trying default"
+    begin
+      filter item[:extension].to_sym
+    rescue Nanoc3::Errors::UnknownFilter
+      raise ArgumentError.new("didn't understand how to handle extension #{item[:extension]} for #{item}")
+    end
   end
 
   layout 'default'
