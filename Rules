@@ -26,7 +26,10 @@ compile '/styles/*/' do
 end
 
 compile '*' do
-  case item[:extension].split('.').last
+  extension = item[:extension].split('.').last
+  case extension
+  when 'textile'
+    filter :redcloth
   when 'haml'
     filter :haml,
       default_haml_options
