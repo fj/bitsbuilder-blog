@@ -20,31 +20,6 @@ preprocess do
   end
 end
 
-compile '/styles/*/' do
-  filter :sass,
-    default_sass_options.merge(:syntax => item[:extension].to_sym)
-end
-
-compile '*' do
-  extension = item[:extension].split('.').last
-  case extension
-  when 'textile'
-    filter :redcloth
-  when 'haml'
-    filter :haml,
-      default_haml_options
-  else
-    warn "[!!] unsupported extension #{item[:extension]} for #{item.identifier}; trying default"
-    begin
-      filter item[:extension].to_sym
-    rescue Nanoc3::Errors::UnknownFilter
-      raise ArgumentError.new("didn't understand how to handle extension #{item[:extension]} for #{item}")
-    end
-  end
-
-  layout 'default'
-end
-
 route '/styles/_*/' do
   # Don't render partials.
   nil
@@ -71,6 +46,31 @@ end
 
 route '*' do
   item.identifier + 'index.html'
+end
+
+compile '/styles/*/' do
+  filter :sass,
+    default_sass_options.merge(:syntax => item[:extension].to_sym)
+end
+
+compile '*' do
+  extension = item[:extension].split('.').last
+  case extension
+  when 'textile'
+    filter :redcloth
+  when 'haml'
+    filter :haml,
+      default_haml_options
+  else
+    warn "[!!] unsupported extension #{item[:extension]} for #{item.identifier}; trying default"
+    begin
+      filter item[:extension].to_sym
+    rescue Nanoc3::Errors::UnknownFilter
+      raise ArgumentError.new("didn't understand how to handle extension #{item[:extension]} for #{item}")
+    end
+  end
+
+  layout 'default'
 end
 
 layout '*', :haml
