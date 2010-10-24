@@ -11,13 +11,14 @@ preprocess do
   # Don't publish items if so indicated.
   items.delete_if { |item| item[:publish] == false }
 
-  # Add stubs to articles.
-  items.select { |item| item[:kind] == 'article' }.each do |item|
-    pieces = item.identifier.split('/')
-    pieces.pop
-    item[:stub] ||= stub_for(item[:title])
-    item.identifier = [pieces.join('/'), item[:stub], ''].join('/')
-  end
+  # Convert all articles to canonical paths.
+  articles.each(&:canonicalize!)
+
+  # Ensure uniqueness of identifiers.
+  article_ids = articles.map(&:entity_id)
+  unique_article_ids = article_ids.compact.uniq
+  delta = article_ids - unique_article_ids
+  raise ArgumentError.new("some articles `#{delta.inspect}` have non-unique or nil identifiers") unless delta.empty?
 end
 
 route '/styles/_*/' do
@@ -31,17 +32,22 @@ end
 
 route '/posts/*/' do
   # Route to "/{posts prefix}/{date}/{stub}".
-  raise ArgumentError.new("missing `created_at` metadata on item #{item}") if item[:created_at].nil?
+  raise ArgumentError.new("tried to route a post that wasn't an article") unless item.article?
 
-  pieces = item.identifier.split('/')
-  name = pieces.pop
-  prefix = pieces.join('/')
-  date_prefix= '/' + Time.parse(item[:created_at]).strftime("%Y/%m/%d")
-  date_prefix.split('/').compact.each { |str| match = '/#{str}'; prefix.gsub!(/#{match}(?=\/)/, '') }
+  prefix = 'posts'
 
-  prefix += date_prefix unless prefix.include?(date_prefix)
+  t = Time.parse(item[:created_at])
+  entry_year  = t.strftime("%Y")
+  entry_month = t.strftime("%m")
+  entry_day   = t.strftime("%d")
 
-  "#{[prefix, name].join('/')}.#{item[:extension].split('.').first}"
+  date = [entry_year, entry_month, entry_day]
+
+  name = "#{item.stub}"
+
+  suffix = "index.#{item[:extension].split('.').first}"
+
+  "#{['', prefix, date.flatten, name, suffix].join('/')}"
 end
 
 route '*' do
