@@ -11,3 +11,7 @@ include Nanoc3::Helpers::Rendering
 def articles
   @items.select { |i| i.article? }
 end
+
+def log(msg)
+  puts "                  ---  #{msg}"
+end
