@@ -1,0 +1,9 @@
+-# Main page layout.
+!!! 5
+%html{:lang => "en"}
+  = render 'meta'
+  %body
+    = render 'header'
+    = render 'content', :content => yield
+    = render 'sidebar'
+    = render 'footer'

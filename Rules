@@ -60,23 +60,19 @@ compile '/styles/*/' do
 end
 
 compile '*' do
+  log("compiling #{item.identifier}")
   extension = item[:extension].split('.').last
-  case extension
-  when 'textile'
-    filter :redcloth
-  when 'haml'
-    filter :haml,
-      default_haml_options
-  else
-    warn "[!!] unsupported extension #{item[:extension]} for #{item.identifier}; trying default"
-    begin
-      filter item[:extension].to_sym
-    rescue Nanoc3::Errors::UnknownFilter
-      raise ArgumentError.new("didn't understand how to handle extension #{item[:extension]} for #{item}")
-    end
+  filter_for_extension!(extension).call
+
+  kind = item.identifier.split('/').reject { |i| i.blank? }.first
+  target = case kind
+  when 'posts' then 'main'
+  when 'pages' then 'home'
+  else              'home'
   end
 
-  layout 'default'
+  log("laying out #{target} (#{kind}) => #{item.identifier}")
+  layout target
 end
 
 layout '*', :haml

@@ -15,3 +15,16 @@ end
 def log(msg)
   puts "                  ---  #{msg}"
 end
+
+module RulesHelpers
+  def filter_for_extension!(extension)
+    case extension
+    when 'textile' then lambda { filter :redcloth }
+    when 'haml'    then lambda { filter :haml, { :format => :html5 } }
+    else
+      raise ArgumentError.new("unmapped extension")
+    end
+  end
+end
+
+include RulesHelpers

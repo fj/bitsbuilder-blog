@@ -1,0 +1,3 @@
+%div{:class => @collection_name}
+  - @collection.each do |c|
+    = link_to(c[:title], c)
