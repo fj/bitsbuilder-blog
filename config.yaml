@@ -15,6 +15,7 @@ text_extensions: [
                    'rb',
                    'sass',
                    'scss',
+                   'textile',
                    'txt',
                    'xhtml',
                    'xml'

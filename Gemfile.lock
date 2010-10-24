@@ -16,6 +16,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    RedCloth (4.2.3)
     adsf (1.0.1)
       rack (>= 1.0.0)
     archive-tar-minitar (0.5.2)
@@ -54,6 +55,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   adsf
   bitsbuilder-blog!
   compass
