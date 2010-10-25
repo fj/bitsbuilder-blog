@@ -34,20 +34,11 @@ route '/posts/*/' do
   # Route to "/{posts prefix}/{date}/{stub}".
   raise ArgumentError.new("tried to route a post that wasn't an article") unless item.article?
 
-  prefix = 'posts'
+  route_for(:post, item).route
+end
 
-  t = Time.parse(item[:created_at])
-  entry_year  = t.strftime("%Y")
-  entry_month = t.strftime("%m")
-  entry_day   = t.strftime("%d")
-
-  date = [entry_year, entry_month, entry_day]
-
-  name = "#{item.stub}"
-
-  suffix = "index.#{item[:extension].split('.').first}"
-
-  "#{['', prefix, date.flatten, name, suffix].join('/')}"
+route '/posts/*/', :rep => :raw do
+  route_for(:post, item).raw_route
 end
 
 route '*' do
@@ -59,20 +50,18 @@ compile '/styles/*/' do
     default_sass_options.merge(:syntax => item[:extension].to_sym)
 end
 
+compile '/posts/*/' do
+  compile_for_item(item)
+  layout_for(item)
+end
+
+compile '/posts/*/', :rep => :raw do
+  # Don't do any processing or layout.
+end
+
 compile '*' do
-  log("compiling #{item.identifier}")
-  extension = item[:extension].split('.').last
-  filter_for_extension!(extension).call
-
-  kind = item.identifier.split('/').reject { |i| i.blank? }.first
-  target = case kind
-  when 'posts' then 'main'
-  when 'pages' then 'home'
-  else              'home'
-  end
-
-  log("laying out #{target} (#{kind}) => #{item.identifier}")
-  layout target
+  compile_for_item(item)
+  layout_for(item)
 end
 
 layout '*', :haml
