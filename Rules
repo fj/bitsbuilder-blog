@@ -14,11 +14,13 @@ preprocess do
   # Convert all articles to canonical paths.
   articles.each(&:canonicalize!)
 
-  # Ensure uniqueness of identifiers.
-  article_ids = articles.map(&:entity_id)
-  unique_article_ids = article_ids.compact.uniq
-  delta = article_ids - unique_article_ids
-  raise ArgumentError.new("some articles `#{delta.inspect}` have non-unique or nil identifiers") unless delta.empty?
+  # Ensure uniqueness of identifiers and article_ids.
+  [:entity_id, :stub].each do |unique_field|
+    candidates = articles.map(&unique_field)
+    unique_articles = candidates.compact.uniq
+    delta = candidates.size - unique_articles.size
+    raise ArgumentError.new("some articles have non-unique or nil values for #{unique_field.to_sym}") unless delta == 0
+  end
 end
 
 route '/styles/_*/' do
