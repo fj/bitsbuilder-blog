@@ -72,10 +72,11 @@ module RulesHelpers
 
   def filter_for_extension!(extension)
     case extension
-    when 'textile' then lambda { filter :redcloth }
-    when 'haml'    then lambda { filter :haml, { :format => :html5 } }
+    when 'textile'  then lambda { filter :redcloth }
+    when 'haml'     then lambda { filter :haml, { :format => :html5 } }
+    when 'markdown' then lambda { filter :rdiscount }
     else
-      raise ArgumentError.new("unmapped extension")
+      raise ArgumentError.new("unmapped extension `#{extension}`")
     end
   end
 
