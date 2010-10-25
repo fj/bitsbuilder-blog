@@ -32,7 +32,7 @@ class Route
   end
 
   def raw_route
-    self.components.map { |c| c == name ? [c, 'raw'] : c }.flatten.join('/').tap do |route|
+    self.components.map { |c| c == name ? "#{c}.raw" : c }.flatten.join('/').tap do |route|
       log("routing raw `#{route}`")
     end
   end
