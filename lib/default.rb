@@ -84,8 +84,8 @@ module RulesHelpers
   end
 
   def layout_for(item, kind = nil)
-    kind ||= item.identifier.split('/').reject { |i| i.blank? }.first.to_sym
-    target = case kind
+    kind ||= item.identifier.split('/').reject { |i| i.blank? }.first || ''
+    target = case kind.to_sym
     when :posts then 'main'
     when :pages then 'home'
     else             'home'
