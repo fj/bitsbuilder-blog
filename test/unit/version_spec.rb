@@ -1,5 +1,7 @@
+require 'spec_helper'
+
 module BitsBuilder
-  describe Blog::VERSION do
+  describe 'Blog::VERSION' do
     subject { Blog::VERSION }
     it { should_not be_nil }
     it { should > "0" }

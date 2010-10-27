@@ -66,6 +66,7 @@ module RulesHelpers
 
   def compile_for_item(item)
     log("compiling #{item.identifier}")
+    filter(:meta)
     item[:extension].split('.')[1..-1].each do |filter|
       log("  ... filtering for #{filter}")
       filter_for_extension!(filter).call

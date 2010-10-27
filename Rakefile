@@ -26,9 +26,9 @@ task :test => ['test:all']
 namespace :test do
   desc 'run unit tests'
   RSpec::Core::RakeTask.new(:units) do |t|
-    t.pattern = 'test/unit/**/*-spec.rb'
+    t.pattern = 'test/unit/**/*[_-]spec.rb'
 
-    helper = File.expand_path('test/unit/spec-helper.rb')
+    helper = File.expand_path('test/unit/spec_helper.rb')
     opts = BitsBuilder::Configuration.configuration_for(:rspec)
 
     t.rspec_opts = ['--require', helper] + opts
@@ -38,3 +38,5 @@ namespace :test do
   task :all => [:units] do
   end
 end
+
+task :default => ['test:all']
