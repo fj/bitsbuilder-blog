@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 module BitsBuilder
   describe 'Blog::VERSION' do
     subject { Blog::VERSION }
