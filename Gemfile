@@ -1,6 +1,7 @@
 source :rubygems
 
-gem 'nanoc', '~> 3.1'
+gem 'nanoc' , :git => 'http://github.com/ddfreyne/nanoc-meta.git'
+gem 'nanoc3', :git => 'http://github.com/ddfreyne/nanoc.git'
 gem 'rake'
 gem 'haml'
 gem 'compass'
