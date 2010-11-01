@@ -14,13 +14,13 @@ GIT
 
 GIT
   remote: http://github.com/rspec/rspec.git
-  revision: 3df49f5942c29aa3eaff80f5904e0b3d4b4f6fed
-  tag: v2.0.0.beta.22
+  revision: 46400ad450a8533ccb8bd91dd86fe1acfe355d88
+  tag: v2.0.1
   specs:
-    rspec (2.0.0.beta.22)
-      rspec-core (= 2.0.0.beta.22)
-      rspec-expectations (= 2.0.0.beta.22)
-      rspec-mocks (= 2.0.0.beta.22)
+    rspec (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
+      rspec-mocks (~> 2.0.1)
 
 PATH
   remote: .
@@ -34,23 +34,34 @@ GEM
     adsf (1.0.1)
       rack (>= 1.0.0)
     archive-tar-minitar (0.5.2)
+    builder (2.1.2)
     columnize (0.3.1)
     compass (0.10.6)
       haml (>= 3.0.4)
     cri (1.0.1)
+    cucumber (0.9.3)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.2.9)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
     diff-lcs (1.1.2)
+    gherkin (2.2.9)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
     haml (3.0.23)
+    json (1.4.6)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
     rack (1.2.1)
     rake (0.8.7)
     rdiscount (1.6.5)
-    rspec-core (2.0.0.beta.22)
-    rspec-expectations (2.0.0.beta.22)
+    rspec-core (2.0.1)
+    rspec-expectations (2.0.1)
       diff-lcs (>= 1.1.2)
-    rspec-mocks (2.0.0.beta.22)
-      rspec-core (= 2.0.0.beta.22)
-      rspec-expectations (= 2.0.0.beta.22)
+    rspec-mocks (2.0.1)
+      rspec-core (~> 2.0.1)
+      rspec-expectations (~> 2.0.1)
     ruby-debug-base19 (0.11.24)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -61,6 +72,7 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.4)
       archive-tar-minitar (>= 0.5.2)
+    term-ansicolor (1.0.5)
 
 PLATFORMS
   ruby
@@ -70,6 +82,7 @@ DEPENDENCIES
   adsf
   bitsbuilder-blog!
   compass
+  cucumber
   haml
   nanoc!
   nanoc3!
