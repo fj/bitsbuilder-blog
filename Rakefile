@@ -1,6 +1,8 @@
 require 'rake'
 require 'rspec/core'
 require 'rspec/core/rake_task'
+require 'cucumber'
+require 'cucumber/rake/task'
 require 'nanoc3/tasks'
 
 module BitsBuilder
@@ -34,8 +36,17 @@ namespace :test do
     t.rspec_opts = ['--require', helper] + opts
   end
 
+  desc 'run Cucumber features'
+  Cucumber::Rake::Task.new(:integrations) do |t|
+    features_dir = 'test/integration'
+    t.cucumber_opts = [
+      "#{features_dir}",
+      "--format pretty"
+    ].join(' ')
+  end
+
   desc 'run all tests'
-  task :all => [:units] do
+  task :all => [:units, :integrations] do
   end
 end
 
