@@ -1,4 +1,1 @@
---color
---format nested
---debug
--I test/unit
+config/.rspec
