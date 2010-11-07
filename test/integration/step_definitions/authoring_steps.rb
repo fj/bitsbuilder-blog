@@ -1,3 +1,33 @@
+module Builder
+  class ContentFile
+    attr_accessor :metadata
+    attr_accessor :content
+    attr_accessor :path
+
+    def initialize(p)
+      self.metadata = {}
+      self.path     = p
+      self.content  = ""
+    end
+
+    def to_metadata_block
+      ''.tap do |s|
+        s << "---\n"
+        self.metadata.each { |k, v| s << "#{k.gsub(' ', '_')}: #{v}\n" }
+        s << "---\n"
+      end
+    end
+
+    def to_content_block
+      self.content
+    end
+
+    def to_s
+      self.to_metadata_block + self.to_content_block
+    end
+  end
+end
+
 module PostBuilder
   def post
     @post ||= {}
