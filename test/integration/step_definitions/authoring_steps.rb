@@ -52,32 +52,67 @@ end
 
 World(PostBuilder)
 
-Given %r{^I author a Textile post with the following content:$} do |content|
-  post[:content] = content
+Given %r{^I have a file "([^"]+)" with metadata:$} do |path, fields|
+  @files ||= {}
+  fields.hashes.each do |hash|
+    raise ArgumentError.new("didn't understand metadata") unless hash['value'] && hash['field']
+    Given %{I have a file "#{path}" with metadata "#{hash['field']}" set to "#{hash['value']}"}
+  end
 end
 
-Given %r{^I author a post$} do
-  post
+Given %r{^I have a file "([^"]+)" with metadata "([\w ]+)" set to "(.+)"$} do |path, field, value|
+  @files ||= {}
+  (@files[path] ||= Builder::ContentFile.new(path)).tap do |f|
+    f.metadata[field] = value
+  end
 end
 
-Given %r{^I set the post ([\w ]+?) to "([^"]+)"$} do |field, value|
-  post.send(:[]=, field.gsub(' ', '_').to_sym, value)
+Given %r{^I have a file "([^"]+)" with(?: content)?:$} do |path, content|
+  dir = File.dirname(path)
+  FileUtils.mkpath(dir) unless File.exists?(dir) && File.directory?(dir)
+  f = File.open(path, 'w')
+  f.write(content)
+  f.close
+
+  @files ||= {}
+  (@files[path] ||= Builder::ContentFile.new(path)).tap { |f| f.content = content }
 end
 
-Given %r{^I set the post ([\w ]+?) to:$} do |field, content|
-  post.send(:[]=, field.gsub(' ', '_').to_sym, content)
-end
-
-Given %r{^I save the post(?: as "([^"]+)")?$} do |filename|
-  post[:filename] ||= filename
-  build(post)
+Given %r{^I set the ([\w ]+?) metadata on "([^"]+)" to (.+)$} do |metadata, path, value|
+  @files.find { |f| f.path == path }[metadata.gsub(' ', '_').to_sym] = value
 end
 
 When %r{^I compile my site$} do
+  When %{I save all files}
   @site = Nanoc3::Site.new('.')
-  @result = ->{ @site.compile }
+  @result = ->{ suppress { @site.compile } }
+end
+
+When %r{^I save all files$} do
+  @files.each do |path, file|
+    File.open(path, 'w').tap do |f|
+      f.write(file.to_s)
+      f.close
+    end
+  end
 end
 
 Then %r{^the result should be successful$} do
   ->{ @result.call }.should_not raise_error
+end
+
+Then %r{^I should see the files I added$} do
+  @files.each do |path, file|
+    require 'time'
+    prefix =  ['output', 'posts']
+    prefix += file.metadata['created at'].split(' ').first.split('-')
+    stub   =  [file.metadata['stub']]
+    suffix =  ['index.html']
+
+    Then %{I should see a file "#{(prefix + stub + suffix).flatten.join(File::Separator)}"}
+  end
+end
+
+Then %r{^I should see a file "([^"]+)"$} do |path|
+  File.exists?(path).should be_true
 end
