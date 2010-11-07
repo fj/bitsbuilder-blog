@@ -3,8 +3,20 @@ module PostBuilder
     @post ||= {}
   end
 
-  def build(post = @post)
-    f = File.open(File.join(File.dirname('__FILE__'), 'content', post[:filename]), 'w')
+  def suppress
+    serr = $stdout.dup
+    sout = $stderr.dup
+
+    begin
+      require 'tempfile'
+      f = Tempfile.new('suppressed-output')
+      $stdout.reopen(f)
+      $stderr.reopen(f)
+      yield
+    ensure
+      $stdout.reopen(sout)
+      $stderr.reopen(serr)
+    end
   end
 end
 
