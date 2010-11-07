@@ -6,7 +6,7 @@ module EnvironmentBuilder
   end
 
   class Environment
-    DefaultContent = ['Rules', 'config.yaml', 'content', 'layouts', 'lib']
+    DefaultContent = ['Rules', 'config.yaml', 'layouts', 'lib']
     require 'tmpdir'
 
     def initialize
