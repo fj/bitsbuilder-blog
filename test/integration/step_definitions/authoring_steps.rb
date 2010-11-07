@@ -52,7 +52,16 @@ end
 
 World(PostBuilder)
 
-Given %r{^I have a file "([^"]+)" with metadata:$} do |path, fields|
+Transform %r{^(file|post) "([^"]+)"$} do |kind, path|
+  prefix = case kind
+  when "post" then ['content', 'posts']
+  when "file" then [nil]
+  end
+
+  [prefix, path].flatten.compact.join(File::Separator)
+end
+
+Given %r{^I have a (\w+ "[^"]+") with metadata:$} do |path, fields|
   @files ||= {}
   fields.hashes.each do |hash|
     raise ArgumentError.new("didn't understand metadata") unless hash['value'] && hash['field']
@@ -60,14 +69,14 @@ Given %r{^I have a file "([^"]+)" with metadata:$} do |path, fields|
   end
 end
 
-Given %r{^I have a file "([^"]+)" with metadata "([\w ]+)" set to "(.+)"$} do |path, field, value|
+Given %r{^I have a (\w+ "[^"]+") with metadata "([\w ]+)" set to "(.+)"$} do |path, field, value|
   @files ||= {}
   (@files[path] ||= Builder::ContentFile.new(path)).tap do |f|
     f.metadata[field] = value
   end
 end
 
-Given %r{^I have a file "([^"]+)" with(?: content)?:$} do |path, content|
+Given %r{^I have a (\w+ "[^"]+") with(?: content)?:$} do |path, content|
   dir = File.dirname(path)
   FileUtils.mkpath(dir) unless File.exists?(dir) && File.directory?(dir)
   f = File.open(path, 'w')
