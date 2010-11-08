@@ -1,10 +1,4 @@
 module EnvironmentBuilder
-  attr_accessor :environment
-
-  def environment
-    @env ||= EnvironmentBuilder::Environment.new
-  end
-
   class Environment
     DefaultContent = ['Rules', 'config.yaml', 'layouts', 'lib']
     require 'tmpdir'
@@ -53,14 +47,14 @@ end
 World(EnvironmentBuilder)
 
 Around('@separate-environment') do |scenario, block|
-  @e ||= EnvironmentBuilder::Environment.new
-  @e.add(*EnvironmentBuilder::Environment::DefaultContent)
+  env = EnvironmentBuilder::Environment.new
+  env.add(*EnvironmentBuilder::Environment::DefaultContent)
 
   begin
-    @e.setup_environment
-    @e.write
+    env.setup_environment
+    env.write
     block.call
   ensure
-    @e.teardown_environment
+    env.teardown_environment
   end
 end
