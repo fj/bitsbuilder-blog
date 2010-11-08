@@ -28,11 +28,7 @@ module Builder
   end
 end
 
-module PostBuilder
-  def post
-    @post ||= {}
-  end
-
+module Suppressed
   def suppress
     serr = $stdout.dup
     sout = $stderr.dup
@@ -50,7 +46,7 @@ module PostBuilder
   end
 end
 
-World(PostBuilder)
+World(Suppressed)
 
 Transform %r{^(file|post) "([^"]+)"$} do |kind, path|
   prefix = case kind
