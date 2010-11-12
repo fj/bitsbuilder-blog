@@ -53,6 +53,7 @@ GEM
     json (1.4.6)
     linecache19 (0.5.11)
       ruby_core_source (>= 0.1.4)
+    nokogiri (1.4.3.1)
     rack (1.2.1)
     rake (0.8.7)
     rdiscount (1.6.5)
@@ -86,6 +87,7 @@ DEPENDENCIES
   haml
   nanoc!
   nanoc3!
+  nokogiri
   rake
   rdiscount
   rspec!

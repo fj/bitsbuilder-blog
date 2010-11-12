@@ -13,6 +13,7 @@ group :test do
   gem 'cucumber'
   gem 'adsf'
   gem 'ruby-debug19'
+  gem 'nokogiri'
 end
 
 gemspec :path => File.expand_path("..", __FILE__)
