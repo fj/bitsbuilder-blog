@@ -102,8 +102,18 @@ When %r{^I save all files$} do
   end
 end
 
-Then %r{^the result should be successful$} do
-  ->{ @result.call }.should_not raise_error
+Then %r{^the result should be (successful|unsuccessful|unsuccessful because "([^"]+)")$} do |state, reason|
+  expected_to_raise_error = case state.split.first
+  when 'successful'   then :should_not
+  when 'unsuccessful' then :should
+  else
+    raise ArgumentError.new("unknown result #{state}")
+  end
+
+  ->{ @result.call }.send(expected_to_raise_error, raise_error(
+    Exception,
+    reason
+  ))
 end
 
 Then %r{^I should see the files I added$} do
