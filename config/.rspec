@@ -1,3 +1,4 @@
 --color
---debug
 --format nested
+--debug
+-I test/unit

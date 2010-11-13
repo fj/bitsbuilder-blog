@@ -1,7 +1,7 @@
 require 'nanoc3'
-require 'bitsbuilder/blog/version'
 
 module BitsBuilder
   module Blog
+    autoload :VERSION, 'bitsbuilder/blog/version'
   end
 end

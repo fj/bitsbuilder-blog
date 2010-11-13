@@ -2,9 +2,7 @@ module BitsBuilder
   module Blog
     module Post
       def article?
-        self[:kind] == 'article' &&
-          !self[:created_at].nil? &&
-          !self[:entity_id].nil?
+        self.identifier.start_with?('/posts/')
       end
 
       def path_components
