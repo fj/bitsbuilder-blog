@@ -24,9 +24,14 @@ module BitsBuilder
   end
 end
 
+desc 'Delete contents of output directory'
+task :clear do
+  FileUtils.rm_rf(Dir.glob('output/*'))
+end
+
 task :test => ['test:all']
 namespace :test do
-  desc 'run unit tests'
+  desc 'Run unit tests'
   RSpec::Core::RakeTask.new(:units) do |t|
     t.pattern = 'test/unit/**/*[_-]spec.rb'
 
@@ -36,7 +41,7 @@ namespace :test do
     t.rspec_opts = ['--require', helper] + opts
   end
 
-  desc 'run Cucumber features'
+  desc 'Run Cucumber features'
   Cucumber::Rake::Task.new(:integrations) do |t|
     features_dir = 'test/integration'
     t.cucumber_opts = [
@@ -45,7 +50,7 @@ namespace :test do
     ].join(' ')
   end
 
-  desc 'run all tests'
+  desc 'Run all tests'
   task :all => [:units, :integrations] do
   end
 end
