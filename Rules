@@ -23,6 +23,10 @@ preprocess do
   end
 end
 
+route '/assets/*/' do
+  "#{item.identifier.chop}.#{item[:extension].split('.').first}"
+end
+
 route '/styles/_*/' do
   # Don't render partials.
   nil
@@ -45,6 +49,10 @@ end
 
 route '*' do
   item.identifier + 'index.html'
+end
+
+compile '/assets/*/' do
+  # Assets don't need to be compiled.
 end
 
 compile '/styles/*/' do
