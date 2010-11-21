@@ -48,7 +48,7 @@ route '/posts/*/', :rep => :raw do
 end
 
 route '*' do
-  item.identifier + 'index.html'
+  item.identifier + config[:default_index]
 end
 
 compile '/assets/*/' do
