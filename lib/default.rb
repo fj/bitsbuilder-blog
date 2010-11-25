@@ -65,7 +65,9 @@ module RouteHelpers
 
     name = "#{item.stub}"
 
-    suffix = "index.#{item[:extension].split('.').first}"
+    default_index = self.config[:default_index]
+    raise ArgumentError.new("no default index supplied") unless default_index
+    suffix = default_index
 
     Route.new(name, '', prefix, date.flatten, name, suffix)
   end
