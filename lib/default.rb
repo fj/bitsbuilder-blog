@@ -16,6 +16,16 @@ def log(msg)
   puts "                  ---  #{msg}"
 end
 
+def items_for_tags
+  @items_for_tags ||= Hash.new { |h, k| h[k] = [] }.tap do |hash|
+    items.select { |item| item[:tags] && !item[:tags].empty? }.each do |item|
+      item[:tags].each do |tag|
+        hash[tag] << item
+      end
+    end
+  end
+end
+
 class Route
   attr_accessor :components
   attr_accessor :name
