@@ -79,10 +79,14 @@ module RulesHelpers
   def compile_for_item(item)
     log("compiling #{item.identifier}")
     filter(:meta)
-    item[:extension].split('.')[1..-1].each do |filter|
-      log("  ... filtering for #{filter}")
-      filter_for_extension!(filter).call
+    extensions_for_item(item).each do |extension|
+      log("  ... filtering for #{extension}")
+      filter_for_extension!(extension).call
     end
+  end
+
+  def extensions_for_item(item)
+    (item[:extension] || 'html.haml').split('.')
   end
 
   def filter_for_extension!(extension)
@@ -91,7 +95,8 @@ module RulesHelpers
     when 'haml'     then lambda { filter :haml, { :format => :html5 } }
     when 'markdown' then lambda { filter :rdiscount }
     else
-      raise ArgumentError.new("unmapped extension `#{extension}`")
+      log("  ... ignoring unknown extension #{extension}")
+      lambda {}
     end
   end
 
