@@ -101,15 +101,20 @@ module RulesHelpers
   end
 
   def layout_for(item, kind = nil)
-    kind ||= item.identifier.split('/').reject { |i| i.blank? }.first || ''
-    target = case kind.to_sym
+    kind ||= item.kind
+    target = case kind
     when :posts then 'main'
     when :pages then 'home'
     else             'home'
     end
 
     log("laying out #{target} (#{kind}) => #{item.identifier}")
-    layout target
+    if kind == :posts
+      layout 'content/entry'
+      layout target
+    else
+      layout target
+    end
   end
 
   def route_for(kind, item)
