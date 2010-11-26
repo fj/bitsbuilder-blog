@@ -24,6 +24,16 @@ module BitsBuilder
   end
 end
 
+desc 'Build site'
+task :build => [:clear] do
+  system 'nanoc compile'
+end
+
+desc 'Serve site on localhost:8765'
+task :serve do
+  system 'nanoc autocompile --port 8765'
+end
+
 desc 'Delete contents of output directory'
 task :clear do
   FileUtils.rm_rf(Dir.glob('output/*'))
