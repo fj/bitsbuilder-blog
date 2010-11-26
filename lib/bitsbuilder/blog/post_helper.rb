@@ -9,6 +9,10 @@ module BitsBuilder
         self.identifier.split('/')
       end
 
+      def kind
+        (self.identifier.split('/').reject { |i| i.blank? }.first || :unknown).to_sym
+      end
+
       def stub
         self[:stub] || stub_for(self[:title])
       end

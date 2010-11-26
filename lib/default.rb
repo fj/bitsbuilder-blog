@@ -16,6 +16,16 @@ def log(msg)
   puts "                  ---  #{msg}"
 end
 
+def items_for_tags
+  @items_for_tags ||= Hash.new { |h, k| h[k] = [] }.tap do |hash|
+    items.select { |item| item[:tags] && !item[:tags].empty? }.each do |item|
+      item[:tags].each do |tag|
+        hash[tag] << item
+      end
+    end
+  end
+end
+
 class Route
   attr_accessor :components
   attr_accessor :name
@@ -55,7 +65,9 @@ module RouteHelpers
 
     name = "#{item.stub}"
 
-    suffix = "index.#{item[:extension].split('.').first}"
+    default_index = self.config[:default_index]
+    raise ArgumentError.new("no default index supplied") unless default_index
+    suffix = default_index
 
     Route.new(name, '', prefix, date.flatten, name, suffix)
   end
@@ -67,10 +79,14 @@ module RulesHelpers
   def compile_for_item(item)
     log("compiling #{item.identifier}")
     filter(:meta)
-    item[:extension].split('.')[1..-1].each do |filter|
-      log("  ... filtering for #{filter}")
-      filter_for_extension!(filter).call
+    extensions_for_item(item).each do |extension|
+      log("  ... filtering for #{extension}")
+      filter_for_extension!(extension).call
     end
+  end
+
+  def extensions_for_item(item)
+    (item[:extension] || 'html.haml').split('.')
   end
 
   def filter_for_extension!(extension)
@@ -79,20 +95,26 @@ module RulesHelpers
     when 'haml'     then lambda { filter :haml, { :format => :html5 } }
     when 'markdown' then lambda { filter :rdiscount }
     else
-      raise ArgumentError.new("unmapped extension `#{extension}`")
+      log("  ... ignoring unknown extension #{extension}")
+      lambda {}
     end
   end
 
   def layout_for(item, kind = nil)
-    kind ||= item.identifier.split('/').reject { |i| i.blank? }.first || ''
-    target = case kind.to_sym
+    kind ||= item.kind
+    target = case kind
     when :posts then 'main'
     when :pages then 'home'
     else             'home'
     end
 
     log("laying out #{target} (#{kind}) => #{item.identifier}")
-    layout target
+    if kind == :posts
+      layout 'content/entry'
+      layout target
+    else
+      layout target
+    end
   end
 
   def route_for(kind, item)

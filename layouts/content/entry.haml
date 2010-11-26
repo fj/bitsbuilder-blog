@@ -1,0 +1,14 @@
+.entry
+  .metadata
+    - translation = {:created_at => :time,
+       :author => :author,
+       :kind => :kind,
+      }
+
+    -# Insert metadata from translation.
+    - translation.each do |field, metadata_class|
+      - if item[field] && !item[field].blank?
+        %div{:class => metadata_class.to_s}
+          = item[field]
+  .data
+    = yield
