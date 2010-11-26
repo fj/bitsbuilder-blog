@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: http://github.com/ddfreyne/nanoc.git
-  revision: aab03746d8422920cab0ef3487c1a1aad13fbb0b
+  revision: 4e181354efe489bd35456ed3aecb827bd18e6e11
   specs:
     nanoc3 (3.2.0a3)
       cri (>= 1.0.0)
