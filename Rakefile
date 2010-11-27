@@ -31,6 +31,33 @@ end
 
 desc 'Serve site on localhost:8765'
 task :serve do
+  require 'webrick'
+  class NonCachingFileHandler < WEBrick::HTTPServlet::FileHandler
+    def prevent_caching(resource)
+      quite_a_while = 10**8
+      resource.tap do |r|
+        r['ETag']          = nil
+        r['Last-Modified'] = Time.now + quite_a_while
+        r['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
+        r['Pragma']        = 'no-cache'
+        r['Expires']       = Time.now - quite_a_while
+      end
+    end
+
+    def do_GET(req, res)
+      super
+      prevent_caching(res)
+    end
+  end
+
+  server = WEBrick::HTTPServer.new :Port => 8765
+  server.mount "/", NonCachingFileHandler , './output'
+  trap('INT') { server.stop }
+  server.start
+end
+
+desc 'Autoserve site on localhost:8765'
+task :autoserve do
   system 'nanoc autocompile --port 8765'
 end
 
