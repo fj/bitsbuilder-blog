@@ -1,14 +1,6 @@
 .entry
+  %h2.title= item[:title]
   .metadata
-    - translation = {:created_at => :time,
-       :author => :author,
-       :kind => :kind,
-      }
-
-    -# Insert metadata from translation.
-    - translation.each do |field, metadata_class|
-      - if item[field] && !item[field].blank?
-        %div{:class => metadata_class.to_s}
-          = item[field]
+    = render 'content/_metadata', :content => @item
   .data
     = yield

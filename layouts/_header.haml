@@ -3,3 +3,17 @@
   .logo
     %img{:src => '/assets/bitsb-logo.png'}
   .title BitsBuilder
+/ Navigation.
+#navigation
+  %ul
+    %li Home
+    %li Archives
+    %li Services
+    %li Projects
+    %li Contact
+  %form
+    %fieldset
+      %input#search{:type => 'text',
+        :name => 'search',
+        :value => 'search...',
+      }
