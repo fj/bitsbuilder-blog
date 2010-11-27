@@ -104,7 +104,7 @@ module RulesHelpers
     kind ||= item.kind
     target = case kind
     when :posts then 'main'
-    when :pages then 'home'
+    when :pages then 'main'
     else             'home'
     end
 
