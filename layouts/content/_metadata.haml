@@ -1,14 +1,12 @@
 -# Expects:
 -#   :content => A Nanoc3::Item
 = raise ArgumentError.new("missing content argument") unless @content
-.metadata
-  - translation = {:created_at => :time,
-     :author => :author,
-     :kind => :kind,
-    }
-
-  -# Insert metadata from translation.
-  - translation.each do |field, metadata_class|
-    - if @content[field] && !@content[field].blank?
-      %div{:class => metadata_class.to_s}
-        = @content[field]
+- translation = {:created_at => :time,
+   :author => :author,
+   :kind => :kind,
+  }
+-# Insert metadata from translation.
+- translation.each do |field, metadata_class|
+  - if @content[field] && !@content[field].blank?
+    %div{:class => metadata_class.to_s}
+      = @content[field]
