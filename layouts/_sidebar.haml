@@ -1,14 +1,14 @@
 #sidebar
-  %h2.widget
-    Navigation
+  .widget
+    %h2.title Navigation
     / Navigation to move between entries.
     %ul.entry-navigation
       %li.next
         %a{:title => 'next article', :href => '/'} Upgrading to Rails 3
       %li.prev
         %a{:title => 'previous article', :href => '/'} Building better RSpec matchers
-  %h2.widget
-    Meta
+  .widget
+    %h2.title Meta
     / Metadata about how to stay in touch.
     %p follow me:
     %ul.connections
@@ -18,8 +18,8 @@
         %a{:title => "Technorati feed", :href => "http://technorati.com/"} Technorati
       %li.linked-in
         %a{:title => "LinkedIn profile", :href => "http://linkedin.com/in/fj"} LinkedIn
-  %h2.widget
-    Tag Cloud
+  .widget
+    %h2.title Tag Cloud
     / Each tag has a 'tag' class and a 'tag-level-n' where n is 0..4. The most popular
     / tags are level 4; the least popular are level 0.
     %ul.tags
