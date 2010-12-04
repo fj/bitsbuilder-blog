@@ -37,13 +37,11 @@ class Route
 
   def route
     self.components.flatten.join('/').tap do |route|
-      log("routing `#{route}`")
     end
   end
 
   def raw_route
     self.components.map { |c| c == name ? "#{c}.raw" : c }.flatten.join('/').tap do |route|
-      log("routing raw `#{route}`")
     end
   end
 end
@@ -119,8 +117,6 @@ module RulesHelpers
 
   def route_for(kind, item)
     self.send(:"route_for_#{kind.to_s}", item).tap do |route|
-      log("routing for   #{item} (#{kind.to_s})")
-      log("  route components are: #{route.components}")
     end
   end
 end
