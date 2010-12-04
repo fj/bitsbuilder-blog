@@ -1,6 +1,9 @@
-.entry
-  %h2.title= item[:title]
-  .metadata
+/* The @class attribute is the "kind" metadata for this article. See below.
+%article{:class => item[:kind]}
+  %header
+    %h1= item[:title]
+  %section.metadata
     = render 'content/_metadata', :content => @item
-  .data
+  %section.content
     ~ yield
+  %section.feedback

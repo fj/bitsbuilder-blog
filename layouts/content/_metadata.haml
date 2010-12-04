@@ -1,12 +1,16 @@
 -# Expects:
 -#   :content => A Nanoc3::Item
 = raise ArgumentError.new("missing content argument") unless @content
-- translation = {:created_at => :time,
-   :author => :author,
-   :kind => :kind,
-  }
--# Insert metadata from translation.
-- translation.each do |field, metadata_class|
-  - if @content[field] && !@content[field].blank?
-    %div{:class => metadata_class.to_s}
-      = @content[field]
+.created_at
+  %time= @content[:created_at]
+.author= @content[:author]
+
+/* one of:
+/*  news:     information about the latest happenings
+/*  article:  a relatively short entry about something of interest
+/*  essay:    a longer, more in-depth entry about a broader topic
+/*  guide:    a thorough treatment of a topic or instructional walkthrough
+/*  snippet:  a reference to interesting content elsewhere, possibly with some commentary
+/*
+/* The value here is also the @class attribute of this article.
+.kind= @content[:kind]
