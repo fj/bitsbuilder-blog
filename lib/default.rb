@@ -101,8 +101,8 @@ module RulesHelpers
   def layout_for(item, kind = nil)
     kind ||= item.kind
     layout_stack = case kind
-    when :posts then ['content/entry', 'main']
-    when :pages then ['main']
+    when :posts then ['content/post', 'main']
+    when :pages then ['content/page', 'main']
     else             ['home']
     end
 
