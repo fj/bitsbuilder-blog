@@ -100,18 +100,15 @@ module RulesHelpers
 
   def layout_for(item, kind = nil)
     kind ||= item.kind
-    target = case kind
-    when :posts then 'main'
-    when :pages then 'main'
-    else             'home'
+    layout_stack = case kind
+    when :posts then ['content/entry', 'main']
+    when :pages then ['main']
+    else             ['home']
     end
 
-    log("laying out #{target} (#{kind}) => #{item.identifier}")
-    if kind == :posts
-      layout 'content/entry'
-      layout target
-    else
-      layout target
+    log("laying out #{layout_stack.inspect} (#{kind}) => #{item.identifier}")
+    layout_stack.each do |l|
+      layout(l)
     end
   end
 
