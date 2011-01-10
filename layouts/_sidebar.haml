@@ -1,34 +1,32 @@
-%section#page-sidebar
-  %section.widget
-    %header
-      %h1 Navigation
-    / Navigation to move between entries.
-    %nav
-      %ul.entry-navigation
-        %li.next
-          %a{:title => 'next article', :href => '/'} Upgrading to Rails 3
-        %li.prev
-          %a{:title => 'previous article', :href => '/'} Building better RSpec matchers
-  %section.widget
-    %header
-      %h1 Meta
-    / Metadata about how to stay in touch.
-    %p follow me:
-    %ul.connections
+#page-sidebar
+  %aside.description We are a satt nulla. Vivamus bibend, nulla ut congue frin gilla, lorem ipsum ultricies risus, ut ir utrum velit tortor vel purus. Lorem ipsum ultricies risus.
+  %a.important{:href => '#'} Work With Us
+  %aside.connections
+    %ul
       %li.twitter
         %a{:title => "Twitter stream", :href => "http://twitter.com"} Twitter
       %li.technorati
         %a{:title => "Technorati feed", :href => "http://technorati.com/"} Technorati
       %li.linked-in
         %a{:title => "LinkedIn profile", :href => "http://linkedin.com/in/fj"} LinkedIn
-  %section.widget
-    %header
-      %h1 Tag Cloud
-    / Each tag has a 'tag' class and a 'tag-level-n' where n is 0..4. The most popular
-    / tags are level 4; the least popular are level 0.
-    %ul.tags
-      %li.tag.tag-level-3 apple
-      %li.tag.tag-level-4 banana
-      %li.tag.tag-level-1 coconut
-      %li.tag.tag-level-0 domino
-      %li.tag.tag-level-2 elephant
+      %li.rss
+        %a{:title => "RSS feed", :href => ""} RSS
+        
+  %section.highlights
+    %h1 Recent Projects
+    %ul
+      %li
+        %a{:title => "Recent Project", :href => "" }
+          %img{:src => "/assets/example.jpg"}
+      %li
+        %a{:title => "Recent Project", :href => "" }
+          %img{:src => "/assets/example.jpg"}
+      %li
+        %a{:title => "Recent Project", :href => "" }
+          %img{:src => "/assets/example.jpg"}
+          
+  %form#searchbar
+    %input{:type => 'search', :name => 'search', :value => 'search...'}
+
+    
+

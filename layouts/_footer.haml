@@ -1,9 +1,11 @@
 %footer#page-footer
-  %section.footer-items
-    %ul
-      %li Archives
-      %li RSS feed
-  %section.copyright-notice
-    %p
-      &copy; 2008 &mdash; 2010,
-      %span.corporate-identity BitsBuilder
+  %aside.copyright-notice
+    &copy; 2008 &mdash; 2010,
+    %span.corporate-identity BitsBuilder
+      
+  %nav
+    %ul.entry-navigation
+      %li.next
+        %a{:title => 'next article', :href => '/'}  Upgrading to Rails 3 &raquo;
+      %li.prev
+        %a{:title => 'previous article', :href => '/'} &laquo; Building better RSpec matchers

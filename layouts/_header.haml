@@ -1,20 +1,20 @@
 / Header.
 %header#page-header
-  .logo
-    %img{:src => '/assets/bitsb-logo.png'}
-  .title BitsBuilder
-/ Navigation.
-%section#page-navigation
-  %nav
+  %h1 BitsBuilder
+  / Navigation.
+  %nav.primary
     %ul
-      %li Home
-      %li Archives
-      %li Services
-      %li Projects
-      %li Contact
-  %form#searchbar
-    %fieldset
-      %input{:type => 'text',
-        :name => 'search',
-        :value => 'search...',
-          }
+      %li 
+        %a.active{:href => "#"} Home
+      %li
+        %a{:href => "#"} Archives
+      %li
+        %a{:href => "#"} Services
+      %li
+        %a{:href => "#"} Projects
+      %li.last
+        %a{:href => "#"} Contact
+
+
+
+
