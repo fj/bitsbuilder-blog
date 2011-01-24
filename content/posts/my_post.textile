@@ -1,0 +1,37 @@
+---
+kind:       article
+title:      "Unit Testing Three: Textile Filters"
+author:     "John Feminella"
+author_url: "http://twitter.com/superninjarobot"
+created_at: 2010-10-03 10:30
+entity_id:  3
+tags:       ['unit-testing', 'meta']
+---
+
+p. This is a sample article designed to exercise various filters and generate representative content.
+
+p. It's sometimes handy to see a list of recently installed packages, so that you can remember what you were fiddling with
+
+bc. $ cat /var/log/dpkg.log* | grep "\ install\ " | sort // really long line without any breaks
+
+h2. This does a few things:
+
+p. First, we concatenate all of the package logs from dpkg, the package manager for Debian. The package logs will have names like /var/log/dpkg.log.1, /var/log/dpkg.log.2, and so on. (The oldest logs will be zipped up, using Ubuntu’s built-in log rotation, so they will look like /var/log/dpkg.log.3.tar.gz.)
+
+p. This is then piped to grep so that we find only installation events. Specifically, we look only for lines that contain a space, followed by the word “install”, followed by another space.
+
+p. Finally, we sort the list of items we got. Because each dpkg record line begins with a timestamp, items that were installed earlier will be sorted first in this list.
+
+p. The result is a chronological list of package installation events, with the most recently installed package first. (Note that if a package was installed and subsequently removed, it will still be on the list.)
+
+p. If you want to get some subset with the most recently installed one first, you can use a combination of sort -r and head -n.
+
+bc. public void Main(String[] args) {
+  System.Console.WriteLine("Some text");
+}
+
+h3. All Done!
+
+h4. Here’s an arbitrary text snippet using the external filter.
+
+p(arbitrary). This paragraph has a class of @arbitrary@; %(arbitrary)this span has the same class%.

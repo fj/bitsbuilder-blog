@@ -1,10 +1,12 @@
 -# Expects:
 -#   :content => A Nanoc3::Item
 = raise ArgumentError.new("missing content argument") unless @content
-.created_at
-  %time= @content[:created_at]
-.author= @content[:author]
-
+%p
+  %time{:datetime => "#{@content[:created_at]}", :pubdate => "pubdate"}= @content[:created_at]
+  by
+  %cite
+    %a{:href => "#{@content[:author_url]}"}= @content[:author]
+  %a.category{:href => "", :rel => "category"}= @content[:kind]
 /* one of:
 /*  news:     information about the latest happenings
 /*  article:  a relatively short entry about something of interest
@@ -13,4 +15,6 @@
 /*  snippet:  a reference to interesting content elsewhere, possibly with some commentary
 /*
 /* The value here is also the @class attribute of this article.
-.kind= @content[:kind]
+  
+
+

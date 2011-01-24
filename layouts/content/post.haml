@@ -2,8 +2,14 @@
 %article{:class => item[:kind]}
   %header
     %h1= item[:title]
-  %section.metadata
-    = render 'content/_metadata', :content => @item
-  %section.content
+    %p
+      = render 'content/_metadata', :content => @item
+  .content
     ~ yield
-  %section.feedback
+  %footer
+    %a.tag{:href => "", :rel => "tag"} Apple
+    %a.tag{:href => "", :rel => "tag"} Sample
+    %a.tag{:href => "", :rel => "tag"} Clouds
+    %a.tag{:href => "", :rel => "tag"} Birds
+  
+  .feedback
