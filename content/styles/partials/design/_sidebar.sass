@@ -1,0 +1,33 @@
+@import "base"
+@import "../../modules/image_replacement"
+@import "compass/css3/opacity"
+
+.connections ul
+  list-style: none
+
+.connections a
+  @include ir
+  background-image: url('/assets/connections.png')
+  background-repeat: no-repeat
+.twitter a
+  background-position: left center
+.linked-in a
+  background-position: (-1 * 50 + px) center
+.technorati a
+  background-position: (-2 * 50 + px) center
+.rss a
+  background-position: (-3 * 50 + px) center
+
+.highlights
+  border-top: 1px solid $highlight-color
+  h1
+    background: #fff
+  ul
+    list-style: none
+    li
+      border: 1px solid $highlight-color
+      a
+        @include opacity(.55)
+        clip: rect(9px, 260px, 170px, 9px)
+        &:hover
+          @include opacity(1)  

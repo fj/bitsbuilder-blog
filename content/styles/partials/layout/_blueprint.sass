@@ -1,0 +1,72 @@
+@import "blueprint/grid"
+
+html
+  height: 100%
+  overflow-y: scroll
+
+body
+  @include container
+  min-height: 100%
+  
+aside, section, article, header, footer
+  display: block
+
+p
+  margin: 20px 0
+  
+ul, ol
+  margin-left: 1.8em
+  
+nav ul, nav li
+  margin: 0
+  
+button, input, select, textarea
+  margin: 0
+
+#page-header
+  @include clearfix
+  h1
+    @include column(7)
+    
+header nav
+  @include column(16, true)
+  @include prepend(1)
+  li
+    @include column-base
+    &.last
+      @include last
+      
+#page
+  @include column(16, true)
+  @include prepend(8)
+  h1.banner
+    @include column(16, true)
+    
+#main-content
+  @include column(11)
+  @include append(1)
+    
+#taxonomy
+  @include column(4, true)
+  
+#page-sidebar
+  @include column(7)
+  @include pull(24, true)
+
+.connections ul
+  @include clearfix
+
+#page-footer
+  @include column(24)
+  aside
+    @include column(7)
+  nav
+    @include column(16, true)
+    @include prepend(1)
+    ul
+      .next
+        @include column(8, true)
+        @include prepend(8)
+      .prev
+        @include column(8)
+        @include pull(16, true)

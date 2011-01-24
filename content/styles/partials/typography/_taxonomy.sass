@@ -1,0 +1,19 @@
+@import "base"
+@import "../../modules/box_link"
+
+#taxonomy
+  h1
+    text-transform: uppercase
+  a
+    line-height: 23px
+    @include box-link(7px, 10px, $link-color, $blueprint-alt-font-family)
+  .tag-level-4 a
+    background-color: $loud
+  .tag-level-3 a
+    background-color: $normal
+  .tag-level-2 a
+    background-color: $link-color
+  .tag-level-1 a
+    background-color: $quiet
+  .tag-level-0 a
+    background-color: $whisper

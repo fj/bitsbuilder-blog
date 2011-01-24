@@ -1,0 +1,29 @@
+@import "base"
+@import "compass/css3/border-radius"
+@import "compass/css3/box-shadow"
+
+article
+  border-bottom: 1px solid $highlight-color
+  .tag
+    @include border-radius($border-radius)
+    background: #eaeaea
+    &:hover
+      @include box-shadow($highlight-color, 0, 1px, 2px)
+  .category
+    background-image: url('/assets/categories.png')
+    background-repeat: no-repeat
+    
+.news .category
+  background-position: 5px 1px
+
+.article .category
+  background-position: 5px (-1 * 50 + px)
+
+.essay .category
+  background-position: 5px (-2 * 50 + px)
+
+.guide .category
+  background-position: 5px (-3 * 50 + px)
+
+.snippet .category
+  background-position: 5px (-4 * 50 + px)
