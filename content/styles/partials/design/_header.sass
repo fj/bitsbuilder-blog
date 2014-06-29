@@ -1,0 +1,11 @@
+@import "base"
+@import "../../modules/image_replacement"
+
+#page-header
+  h1
+    background-image: url('/assets/logo.gif')
+    background-repeat: center center
+    @include ir
+    
+header nav a.active
+  background: $highlight-color

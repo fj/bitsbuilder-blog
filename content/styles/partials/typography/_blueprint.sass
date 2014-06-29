@@ -1,0 +1,64 @@
+@import "base"
+
+body, select, input, textarea 
+  color: $font-color
+  font-family: $blueprint-font-family
+  font-size: $blueprint-font-size
+  line-height: 24px
+  
+a:hover, a:active
+  outline: none
+
+a, a:active, a:visited
+  color: $link-color
+  text-decoration: none
+
+a:hover
+  color: $normal
+
+a:link
+  -webkit-tap-highlight-color: #FF5E99
+
+small
+  font-size: 85%
+
+strong, th
+  font-weight: bold
+  
+sub
+  vertical-align: sub
+  font-size: smaller
+
+sup
+  vertical-align: super 
+  font-size: smaller
+  
+::-moz-selection
+  background: #FF5E99
+  color: #fff
+  text-shadow: none
+
+::selection
+  background: #FF5E99
+  color: #fff
+  text-shadow: none
+  
+input[type="radio"]
+  vertical-align: text-bottom
+
+input[type="checkbox"]
+  vertical-align: bottom
+  
+a:link
+  -webkit-tap-highlight-color: #FF5E99
+  
+h2, h3, h4
+  font-family: $blueprint-font-family
+  font-size: $heading-font-size
+  
+h3
+  font-size: $heading-font-size * .85
+  
+h4
+  font-size: $heading-font-size * .70
+  

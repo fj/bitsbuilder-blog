@@ -1,9 +1,17 @@
 !!! 5
-%html{:lang => "en"}
+
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+%html.no-js{ :lang => "en" }
+  <!--<![endif]-->
+
   = render '_meta'
   %body
     = render '_header'
-    = render '_banner'
     ~ render '_content', :content => yield
     = render '_sidebar'
     = render '_footer'
+    = render '_javascript'
